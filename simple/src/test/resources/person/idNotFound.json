@@ -1,0 +1,6 @@
+{
+  "httpStatus": 404,
+  "id": "1",
+  "suggestion": "provide a valid id for Person",
+  "message": "resource does not exist"
+}

@@ -1,4 +1,4 @@
-package javasl.person;
+package com.javasl.restwithjunittests.person;
 
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
@@ -8,12 +8,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.javasl.restwithjunittests.errors.ExceptionCtrl;
+import com.javasl.restwithjunittests.errors.ResourceNotFoundException;
+import com.javasl.restwithjunittests.person.service.PersonService;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import javasl.errors.ExceptionCtrl;
-import javasl.errors.ResourceNotFoundException;
-import javasl.person.service.PersonService;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

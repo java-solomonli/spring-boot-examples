@@ -1,9 +1,10 @@
 package com.javasl.restwithjunittests.errors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import jakarta.servlet.RequestDispatcher;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.mock.web.MockHttpServletRequest;
 
 class ErrorCtrlTest {
@@ -20,9 +21,15 @@ class ErrorCtrlTest {
         new RuntimeException("test"));
 
     var response = errorCtrl.handleError(request);
+    var expected = new ErrorDto(
+        HttpStatus.BAD_REQUEST.value(),
+        "/wrong/path",
+        "Bad request(Exception message: test",
+        "please check your request");
 
-    assertEquals(400, response.getStatusCode().value());
-    assertEquals("/wrong/path", response.getBody().id());
+    assertThat(response).isNotNull();
+    assertThat(response.getStatusCode().value()).isEqualTo(400);
+    assertThat(response.getBody()).isEqualTo(expected);
   }
 
   @Test
@@ -34,8 +41,14 @@ class ErrorCtrlTest {
         new RuntimeException("Fehler unexpected error"));
 
     var response = errorCtrl.handleError(request);
-
-    assertEquals(500, response.getStatusCode().value());
-    assertEquals("/path/ok", response.getBody().id());
+    var expected = new ErrorDto(
+        HttpStatus.INTERNAL_SERVER_ERROR.value(),
+        "/path/ok",
+        "error(Exception message: Fehler unexpected error",
+        "please check your request"
+    );
+    assertThat(response).isNotNull();
+    assertThat(response.getStatusCode().value()).isEqualTo(500);
+    assertThat(response.getBody()).isEqualTo(expected);
   }
 }

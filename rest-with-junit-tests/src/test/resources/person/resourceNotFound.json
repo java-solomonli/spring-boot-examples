@@ -1,0 +1,6 @@
+{
+  "httpStatus": 400,
+  "id": "favicon",
+  "suggestion": "check that the resource really exists",
+  "message": "No static resource favicon."
+}

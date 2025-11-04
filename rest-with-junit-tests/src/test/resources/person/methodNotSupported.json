@@ -1,0 +1,6 @@
+{
+  "httpStatus": 405,
+  "id": "POST",
+  "suggestion": "use a valid method",
+  "message": "method not supported"
+}

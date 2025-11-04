@@ -1,0 +1,6 @@
+{
+  "httpStatus": 400,
+  "id": "/v1/persons/a/a",
+  "suggestion": "use a valid path",
+  "message": "this path is invalid, /v1/persons/a/a"
+}

@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -17,21 +18,21 @@ public class ExceptionCtrl {
 
   @ExceptionHandler(NoHandlerFoundException.class)
   public ResponseEntity<ErrorDto> handleNoResourceResolver(NoHandlerFoundException e) {
-    log.warn("handleBadPath: {}", e.getMessage());
+    log.warn("handleNoResourceResolver: {}", e.getMessage());
 
-    var error = new ErrorDto(HttpStatus.NOT_FOUND.value(), e.getRequestURL(),
-        e.getMessage(),
+    var error = new ErrorDto(HttpStatus.BAD_REQUEST.value(), e.getRequestURL(),
+        "this path is invalid, " + e.getRequestURL(),
         "use a valid path");
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
   }
 
   @ExceptionHandler(NoResourceFoundException.class)
   public ResponseEntity<ErrorDto> handleNoResourceFoundException(NoResourceFoundException e) {
-    log.warn("handleBadPath: {}", e.getMessage());
+    log.warn("handleNoResourceFoundException: {}, path: {}", e.getMessage(), e.getResourcePath());
 
     var error = new ErrorDto(HttpStatus.BAD_REQUEST.value(), e.getResourcePath(),
         e.getMessage(),
-        "use a valid path");
+        "check that the resource really exists");
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
   }
 
@@ -39,9 +40,9 @@ public class ExceptionCtrl {
   public ResponseEntity<ErrorDto> handleBadPath(MethodArgumentTypeMismatchException e) {
     log.warn("handleBadPath: {}", e.getMessage());
 
-    var error = new ErrorDto(HttpStatus.BAD_REQUEST.value(), e.getName() + e.getParameter(),
-        e.getMessage(),
-        "use a valid id");
+    var error = new ErrorDto(HttpStatus.BAD_REQUEST.value(), "invalid id",
+        "used an invalid id",
+        "check the id again for any errors");
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
   }
 
@@ -52,5 +53,15 @@ public class ExceptionCtrl {
     var error = new ErrorDto(HttpStatus.NOT_FOUND.value(), e.getId(),
         "resource does not exist", "provide a valid id for " + e.getResourceName());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+  }
+
+  @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+  public ResponseEntity<ErrorDto> handleMethodNotSupported(
+      HttpRequestMethodNotSupportedException e) {
+    log.warn("handleMethodNotSupported: {}", e.getMessage());
+    var error = new ErrorDto(HttpStatus.METHOD_NOT_ALLOWED.value(), e.getMethod(),
+        "method not supported",
+        "use a valid method");
+    return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).body(error);
   }
 }

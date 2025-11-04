@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class ErrorCtrl implements ErrorController {
 
   private static final Logger log = LoggerFactory.getLogger(ErrorCtrl.class);
@@ -25,10 +25,11 @@ public class ErrorCtrl implements ErrorController {
         .orElse(new Exception("unexpected error"));
     var requestUri = (String) Optional.ofNullable(
         request.getAttribute(RequestDispatcher.ERROR_REQUEST_URI)).orElse("");
+
     var message = (String) Optional.ofNullable(
         request.getAttribute(RequestDispatcher.ERROR_MESSAGE)).orElse("unexpected error");
 
-    log.error("--> handleError: status: {}, requestUri: {}, message: {}, exception: {}", status,
+    log.error("--> handleError: status: {}, requestUri: {}, message: {}, exception: ", status,
         requestUri, message, exception);
     var error = new ErrorDto(
         status,

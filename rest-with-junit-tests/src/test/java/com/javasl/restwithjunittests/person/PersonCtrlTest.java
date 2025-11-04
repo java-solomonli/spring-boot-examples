@@ -8,13 +8,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import com.javasl.restwithjunittests.errors.ExceptionCtrl;
 import com.javasl.restwithjunittests.errors.ResourceNotFoundException;
 import com.javasl.restwithjunittests.person.service.PersonService;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,9 +32,6 @@ class PersonCtrlTest {
 
   @MockitoBean
   PersonService personService;
-
-  @Autowired
-  ExceptionCtrl exceptionCtrl;
 
   @Test
   void insert() throws Exception {

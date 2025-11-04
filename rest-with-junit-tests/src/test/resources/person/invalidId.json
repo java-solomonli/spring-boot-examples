@@ -1,0 +1,6 @@
+{
+  "httpStatus": 400,
+  "id": "invalid id",
+  "suggestion": "check the id again for any errors",
+  "message": "used an invalid id"
+}

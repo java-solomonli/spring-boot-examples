@@ -4,6 +4,9 @@ spring:
   web:
     resources:
       add-mappings: false
+  error:
+    whitelabel:
+      enabled: false
 
   datasource:
     url: jdbc:h2:mem:testdb
@@ -19,3 +22,16 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
+
+  mvc:
+    dispatcher:
+      servlet:
+        throw-exception-if-no-handler-found: true
+
+server:
+  error:
+    handeling: only-once
+
+logging:
+  level:
+    org.springframework.web: DEBUG

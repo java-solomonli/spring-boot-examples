@@ -12,7 +12,7 @@ class ErrorCtrlTest {
   ErrorCtrl errorCtrl = new ErrorCtrl();
 
   @Test
-  void unexpectedError() {
+  void unexpectedError400() {
     var request = new MockHttpServletRequest();
     request.setAttribute(RequestDispatcher.ERROR_STATUS_CODE, 400);
     request.setAttribute(RequestDispatcher.ERROR_REQUEST_URI, "/wrong/path");
@@ -33,7 +33,7 @@ class ErrorCtrlTest {
   }
 
   @Test
-  void handleUnexpectedError() {
+  void unexpectedError500() {
     var request = new MockHttpServletRequest();
     request.setAttribute(RequestDispatcher.ERROR_REQUEST_URI, "/path/ok");
     request.setAttribute(RequestDispatcher.ERROR_MESSAGE, "error");
